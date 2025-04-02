@@ -1,8 +1,7 @@
 # Do You Really Think About Consequences? Bridging Reinforcement Learning and Control Theory for Long-Term Decision Making
 
 The code for the poster presented at the RL4AA25 workshop at DESY in April 2025.
-O. Mironova￼, L. Fischl￼, T. Gallien￼, S. Hirlaender￼
-⸻
+O. Mironova, L. Fischl, T. Gallien, S. Hirlaender
 
 ## Motivation
 
@@ -47,3 +46,6 @@ This project implements and compares the following control policies:
 6.  **Data-Driven Linear Bayesian MPC:** An MPC approach that learns a linear model of the system dynamics online from observed transitions and uses Bayesian inference.
 7.  **Data-Driven GP-MPC (Standard):** An MPC approach using Gaussian Processes to learn a non-parametric model of the system dynamics online.
 8.  **Data-Driven GP-MPC (Structured/Causal):** A variation of GP-MPC that incorporates structural knowledge (e.g., causality from accelerator physics) into the GP model.
+
+
+![Poster_RL4AA_2025_Do_you_really_think_about_consequences_poster.png](Poster_RL4AA_2025_Do_you_really_think_about_consequences_poster.png)

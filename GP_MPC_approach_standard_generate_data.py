@@ -21,8 +21,6 @@ from environment.environment_helpers import (
     SmartEpisodeTrackerWithPlottingWrapper,
 )
 
-
-
 def save_model_and_hyperparams(ctrl_obj: GpMpcController, params: Dict, filename: str = "model_and_params.pkl") -> None:
     """Save the model and hyper parameters to a file using pickle."""
     with open(filename, "wb") as f:
