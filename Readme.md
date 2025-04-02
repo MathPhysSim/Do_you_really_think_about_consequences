@@ -1,15 +1,7 @@
 # Do You Really Think About Consequences? Bridging Reinforcement Learning and Control Theory for Long-Term Decision Making
 
-# Todos:
-- ~~The stuctural approach of the GP-MPC has to be implemented~~ *(Implemented)*
-- Nice plot of the actions range in state space under the constraints
-- The consequences on the solution of the problem have to be discussed (There is a difference in the final outcome if you use the analytical approach).
-- Slight non-linearities have to be added
-- More refined noise studies *(Noise sweeps implemented, further refinement possible)*
-- Misspecifications of the dynamics could be studied.
-
-Here’s a refined version of your motivation and description with improved clarity and flow:
-
+The code for the poster presented at the RL4AA25 workshop at DESY in April 2025.
+O. Mironova￼, L. Fischl￼, T. Gallien￼, S. Hirlaender￼
 ⸻
 
 ## Motivation
