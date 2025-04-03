@@ -1,6 +1,6 @@
 # Do You Really Think About Consequences? Bridging Reinforcement Learning and Control Theory for Long-Term Decision Making
 
-The code for the poster presented at the RL4AA25 workshop at DESY in April 2025.
+The code for the poster presented at the RL4AA25 workshop (https://rl4aa.github.io/RL4AA25/) we organised at DESY in April 2025.
 
 O. Mironova, L. Fischl, T. Gallien, S. Hirlaender
 
