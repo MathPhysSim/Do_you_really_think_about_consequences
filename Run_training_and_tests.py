@@ -172,7 +172,11 @@ if create_data:
             env = AwakeSteering(noise_sigma=noise_sigma)#, seed=seed)
             for seed in seed_list:
                 trajectory_data_manager.clear_data()
-                if not test_name == 'Classical':
+                if test_name == 'Classical':
+                    # Assuming 'env' is your AwakeSteering environment already instantiated:
+                    episode_states, episode_actions, episode_rewards = iterative_optimization(env, trajectory_data_manager,
+                                                                                              max_steps=50)
+                else:
                     # Select policy
                     if test_name == 'PPO':
                         # Load trained model
@@ -229,11 +233,6 @@ if create_data:
                         if done:
                             break
                     trajectory_data_manager.save_data(noise_sigma, seed)
-                else:
-                    # Assuming 'env' is your AwakeSteering environment already instantiated:
-                    episode_states, episode_actions, episode_rewards = iterative_optimization(env, trajectory_data_manager,
-                                                                                              max_steps=50)
-
 
             state_history, action_history, reward_history = trajectory_data_manager.get_data()
 

@@ -98,15 +98,17 @@ def main() -> None:
     """
     Main function to run the GP-MPC controller with the environment.
     """
+
+    # Here we run the training ----------------------------------------------------------
     params_controller_dict = read_experiment_config("config/data_driven_mpc_config.yaml")
-    num_test_steps = 25#params_controller_dict.get("num_steps_env", 1000)
+    num_test_steps = 25 #params_controller_dict.get("num_steps_env", 1000)
     step_training = num_test_steps
     num_repeat_actions = params_controller_dict["controller"].get("num_repeat_actions", 1)
     random_actions_init = params_controller_dict.get("random_actions_init", 0)
 
     # env = load_env_config(env_config="config/environment_setting.yaml")
     env = AwakeSteering()
-    DoF = 10#env.DoF
+    DoF = 10 #env.DoF
 
     adjust_params_for_DoF(params_controller_dict, DoF)
 
@@ -189,10 +191,10 @@ def main() -> None:
     # Save the trained model and hyper parameters
     save_model_and_hyperparams(ctrl_obj, params_controller_dict)
 
+    # Here we run the test ----------------------------------------------------------
     # ----------------------------------------------------------
     # Reload the model and hyper parameters for testing
     loaded_ctrl_obj, loaded_params = load_model_and_hyperparams()
-    #
 
     test_name = 'GP_MPC_3'
     experiment_name = 'noise_test'
