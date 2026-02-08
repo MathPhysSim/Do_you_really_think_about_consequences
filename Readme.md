@@ -1,5 +1,83 @@
 # Do You Really Think About Consequences? Bridging Reinforcement Learning and Control Theory for Long-Term Decision-Making in Beam Steering
+# AWAKE Steering Optimization
 
+This repository contains implementations of various control and optimization approaches for the AWAKE electron beam steering problem.
+
+## Project Structure
+
+```
+/
+├── config/                   # Configuration files
+│   ├── data_driven_mpc_config.yaml    # MPC controller configuration
+│   └── environment_setting.yaml       # Environment settings
+├── environment/              # Environment implementation
+│   ├── environment_awake_steering_renamed.py  # Main environment class
+│   ├── environment_helpers.py          # Helper functions and wrappers
+│   └── tasks/                 # Task definitions
+├── helper_scripts/           # Various helper scripts
+├── models/                   # Controller model implementations
+│   ├── base_controller.py    # Abstract base controller class
+│   └── ...
+├── utils/                    # Utility functions
+│   ├── experiment_manager.py # Experiment data management
+│   └── visualization.py      # Data visualization utilities
+├── results/                  # Experiment results (git-ignored)
+└── Publication_files/        # Papers and publications
+```
+
+## Algorithm Implementations
+
+This project implements multiple control algorithms:
+
+1. **Model-based MPC** - Uses a perfect model of the system
+2. **Data-driven GP-based MPC** - Gaussian Process based Model Predictive Control
+3. **Data-driven Linear Bayesian MPC** - Linear model with Bayesian approach
+4. **PPO (Proximal Policy Optimization)** - Reinforcement learning approach
+5. **Classical Optimization (COBYLA)** - Model-free stepwise optimization
+
+## Setup
+
+### Requirements
+
+This project uses Python 3.11 with conda/miniconda for environment management.
+
+```bash
+# Create and activate conda environment
+conda create -n awake-steering python=3.11
+conda activate awake-steering
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+## Running Experiments
+
+### Data Generation
+
+To generate training data for the models:
+
+```bash
+python Linear_MPC_approach_generate_training_data.py
+python GP_MPC_approach_standard_generate_data.py
+python GP_MPC_approach_structured_generate-training_data.py
+python Run_stepwise_optimizsation.py
+```
+
+### Visualization
+
+To analyze and visualize results:
+
+```bash
+python Read_results_and_create_figures.py
+```
+
+## License
+
+[Add license information here]
+
+## Contact
+
+[Add contact information here]
 The code for the poster presented at the RL4AA25 workshop (https://rl4aa.github.io/RL4AA25/) we organised at DESY in April 2025.
 
 O. Mironova, L. Fischl, T. Gallien, S. Hirlaender

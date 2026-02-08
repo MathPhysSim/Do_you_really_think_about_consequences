@@ -1,0 +1,14 @@
+# Environment settings
+environment:
+  name: "AwakeSteering"
+  noise_sigma: 0.01
+  threshold: -0.1
+  max_steps: 50
+  state_scale: 1.0
+  use_absolute_settings: false
+  plane: "horizontal"
+
+# Task settings
+task:
+  verification_tasks_loc: "environment/tasks/"
+  sample_tasks_random_seed: 42
