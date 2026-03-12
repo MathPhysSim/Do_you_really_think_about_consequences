@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Really Think About Consequences? — RL4AA'25 Poster</title>
+    <meta name="description" content="Research poster comparing Reinforcement Learning and Model Predictive Control for beam steering in a linear accelerator environment.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-card: rgba(20, 28, 50, 0.75);
+            --text-primary: #e8ecf4;
+            --text-secondary: #8b95b0;
+            --accent: #6c8cff;
+            --accent-glow: rgba(108, 140, 255, 0.25);
+            --border: rgba(108, 140, 255, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 20%, rgba(108, 140, 255, 0.08), transparent),
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(168, 85, 247, 0.06), transparent);
+            z-index: -1;
+        }
+
+        header {
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            background: rgba(10, 14, 26, 0.6);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1.3;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            max-width: 800px;
+            margin: 0 auto 0.6rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .authors {
+            margin-top: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .authors strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            gap: 1.5rem;
+        }
+
+        .poster-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 1.414 / 1;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: var(--bg-card);
+            box-shadow:
+                0 0 40px rgba(108, 140, 255, 0.06),
+                0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .poster-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .fallback-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 12px var(--accent-glow);
+        }
+
+        .fallback-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            transition: all 0.2s;
+        }
+
+        .link-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1.5rem 1rem 1rem; }
+            .poster-container { aspect-ratio: auto; height: 70vh; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="badge">RL4AA'25 Workshop — Salzburg, Austria</span>
+        <h1>Do You Really Think About Consequences?</h1>
+        <p class="subtitle">
+            Bridging Reinforcement Learning and Control Theory for Beam Steering in a Linear Accelerator
+        </p>
+        <p class="authors">
+            <strong>Simon Hirlaender</strong> · Paris Lodron University of Salzburg
+        </p>
+    </header>
+
+    <main>
+        <div class="poster-container">
+            <iframe
+                src="../Poster_RL4AA_2025_Do_you_really_think_about_consequences.pdf"
+                title="Research Poster PDF"
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="links">
+            <a class="fallback-link" href="../Poster_RL4AA_2025_Do_you_really_think_about_consequences.pdf" download>
+                ⬇ Download Poster (PDF)
+            </a>
+            <a class="link-btn" href="https://github.com/MathPhysSim/Do_you_really_think_about_consequences">
+                📂 GitHub Repository
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 Simon Hirlaender · IDA Lab, Paris Lodron University of Salzburg
+    </footer>
+</body>
+</html>

@@ -1,8 +1,14 @@
-# Do You Really Think About Consequences? Bridging Reinforcement Learning and Control Theory for Long-Term Decision-Making in Beam Steering
+# Do You Really Think About Consequences?
 
-The code for the poster presented at the RL4AA25 workshop (https://rl4aa.github.io/RL4AA25/) we organised at DESY in April 2025.
+**Bridging Reinforcement Learning and Control Theory for Long-Term Decision-Making in Beam Steering**
 
-O. Mironova, L. Fischl, T. Gallien, S. Hirlaender
+[![View Poster Online](https://img.shields.io/badge/📄_Poster-View_Online-6c8cff?style=for-the-badge)](https://mathphyssim.github.io/Do_you_really_think_about_consequences/)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
+> Poster presented at [RL4AA'25 Workshop](https://rl4aa.github.io/RL4AA25/) at DESY, April 2025.
+>
+> **Authors:** O. Mironova, L. Fischl, T. Gallien, S. Hirlaender
 
 ## Abstract
 
@@ -10,84 +16,61 @@ This poster evaluates decision-making under delayed consequences using Reinforce
 
 ## Motivation
 
-To demonstrate the strengths of different approaches in decision-making under delayed consequences, we consider a fundamental problem in accelerator physics: beam steering in a linear accelerator (linac). This problem serves as an illustrative example where classical optimization methods, particularly greedy ones, may fall short due to their potential ignorance of long-term effects.
-
-Although the underlying dynamics are simulated as linear in this project, the problem becomes non-trivial due to action constraints (corrector strength limits) and episode termination conditions (e.g., beam offset exceeding limits or reaching a target RMS threshold). These factors can prevent naive greedy algorithms from achieving optimal solutions over an entire episode, highlighting the advantages of techniques that account for delayed consequences, such as Reinforcement Learning (RL) and Model Predictive Control (MPC).
-
-## Project Overview
-
-This project explores advanced control techniques for steering the electron beam in a simulated AWAKE (Advanced Wakefield Experiment) accelerator environment. The core idea is to bridge the gap between Reinforcement Learning (RL) and classical/modern control theory to develop and compare algorithms that can make effective long-term decisions for beam alignment and correction, especially under noisy conditions. Experiments span multiple policies, with performance comparisons across noise settings and termination conditions. The project aims to assess how different algorithms balance short-term reward with long-term performance in a constrained physics-inspired setting.
-
-The project implements, trains (where applicable), and evaluates several control policies by running them in the simulated environment under varying noise levels and recording their performance trajectories.
+Beam steering in a linear accelerator serves as an illustrative example where classical greedy optimization methods may fall short due to their ignorance of long-term effects. Although the underlying dynamics are simulated as linear, the problem becomes non-trivial due to action constraints (corrector strength limits) and episode termination conditions (beam offset exceeding limits or reaching a target RMS threshold).
 
 ## Getting Started
 
-To set up the environment and run sample experiments, follow these instructions:
+```bash
+# Install dependencies
+pip install -e .
 
-```
+# Or using requirements.txt
 pip install -r requirements.txt
 
-# Run PPO training
+# Train a PPO agent
 python Run_PPO_training.py
 
 # Run GP-MPC with structured model
 python GP_MPC_approach_structured_generate-training_data.py
 
-# Evaluate policies
+# Evaluate all policies
 python Run_training_and_tests.py
+
+# Analyse results
+python Read_results_and_create_figures.py
 ```
 
-## Code Structure and Key Components
+## Code Structure
 
-*   **Simulation Environment:**
-    - `awake_steering_simulated.py`: Defines the core simulation environment based on `gymnasium.Env`. It includes linear dynamics (response matrix), action/observation spaces, reward calculation, noise injection, and episode termination logic.
-    
-*   **Controllers:**
-    - `MPC.py`: Implements the classical Model Predictive Control (MPC) algorithm assuming a known model (perfect model MPC).
-    - `linear_Bayesian_mpc.py`: Implements the Linear Bayesian MPC controller, likely learning the system dynamics online.
-    - `gp_mpc_controller.py`: Implements the standard Gaussian Process (GP) MPC controller.
-    - `gp_mpc_structured_clean.py`: Implements the structured (causal) Gaussian Process (GP) MPC controller and associated helper functions.
-    - `gp_mpc_structured_controller.py`: Part of the structured GP-MPC controller logic.
-
-*   **Experiment Scripts:**
-    - `Run_PPO_training.py`: Trains a Proximal Policy Optimization (PPO) agent using `stable-baselines3` on the environment and saves the trained policy.
-    - `Run_stepwise_optimization.py`: Implements and runs a classical, model-free, *stepwise* optimization approach (e.g., COBYLA) directly on the environment, saving trajectories.
-    - `Run_training_and_tests.py`: Script to evaluate several pre-defined/trained policies (Analytic, PPO, Random, Model-Based MPC variants, Classical Stepwise) across noise levels/seeds and save their trajectories.
-
-*   **Data Generation:**
-    - `Linear_MPC_approach_generate_training_data.py`: Script to run experiments using the Data-Driven Linear Bayesian MPC, collect data across noise levels/seeds, and save trajectories using `TrajectoryDataManager`.
-    - `GP_MPC_approach_standard_generate_data.py`: Script orchestrating standard GP-MPC runs, collecting data, and saving trajectories. Includes model saving/loading.
-    - `GP_MPC_approach_structured_generate-training_data.py`: Script to run experiments using the structured Data-Driven GP-MPC, collect data, and save trajectories.
-
-*   **Analysis and Visualization:**
-    - `Read_results_and_create_figures.py`: Loads the saved trajectory data (`.pkl` files) for different algorithms and noise levels, processes it using pandas, and generates comparative performance plots (e.g., reward vs. time step).
-
-*   **Helpers and Utilities:**
-    - `helpers.py`: Contains helper functions (assumed, based on import in `awake_steering_simulated.py`).
-    - `general_helpers.py`: Contains general helper functions for various tasks.
-    - `experiment_helpers.py`: Handles experiments, training/testing loops, or orchestration logic.
-    - `utils.py`: Contains utility functions for experiments and plotting.
-
-*   **`TrajectoryDataManager` (Class):** Helper class defined within several scripts (`Linear_MPC...`, `GP_MPC...`, `Run_stepwise...`, `Run_training...`) for collecting and saving state, action, and reward histories during experiments.
-
-*   **`config/` (Directory):** Contains configuration files (e.g., `data_driven_mpc_config.yaml`, `environment_setting.yaml`) for controller and environment parameters.
-*   **`electron_design.mad`:** (Assumed) Defines the accelerator optics, likely used to generate the response matrix.
+| Component | Files | Description |
+|-----------|-------|-------------|
+| **Environment** | `awake_steering_simulated.py` | Gymnasium-based simulation with linear dynamics, noise injection, and termination logic |
+| **MPC Controllers** | `helper_scripts/MPC.py`, `linear_Bayesian_mpc.py`, `gp_mpc_*.py` | Perfect-model MPC, Bayesian linear MPC, standard and causal GP-MPC |
+| **RL Agent** | `Run_PPO_training.py` | PPO training via stable-baselines3 |
+| **Classical Optimizer** | `Run_stepwise_optimization.py` | Model-free stepwise optimization (COBYLA) |
+| **Evaluation** | `Run_training_and_tests.py` | Multi-policy evaluation across noise levels |
+| **Analysis** | `Read_results_and_create_figures.py` | Comparative performance plots |
+| **Data Management** | `helper_scripts/data_management.py` | Shared `TrajectoryDataManager` and experiment folder utilities |
+| **Config** | `config/*.yaml` | Environment and controller parameters |
 
 ## Control Policies Compared
 
-This project implements and compares the following control policies:
-
-1.  **Analytic:** Calculates the corrective action via direct matrix inversion of the (known) system response matrix. Represents a single-step, model-based optimal correction assuming no constraints are violated.
-2.  **Model-Based MPC (Perfect Model):** Uses the known linear model (`env.response`) to optimize actions over a finite prediction horizon. Evaluated with different horizon settings (e.g., `MPC` vs. `MPC_short` which might simulate greedy behavior with a perfect model).
-3.  **PPO (Proximal Policy Optimization):** A model-free reinforcement learning algorithm trained to maximize cumulative reward. The policy is learned from interactions with the environment.
-4.  **Random:** Applies random actions sampled from the action space at each step. Serves as a baseline.
-5.  **Stepwise Model-Free Optimization (e.g., COBYLA):** A classical optimization algorithm applied iteratively at each step to find the best *immediate* action based on environment feedback, without an explicit dynamics model.
-6.  **Data-Driven Linear Bayesian MPC:** An MPC approach that learns a linear model of the system dynamics online from observed transitions and uses Bayesian inference.
-7.  **Data-Driven GP-MPC (Standard):** An MPC approach using Gaussian Processes to learn a non-parametric model of the system dynamics online.
-8.  **Data-Driven GP-MPC (Structured/Causal):** A variation of GP-MPC that incorporates structural knowledge (e.g., causality from accelerator physics) into the GP model.
-
-![Poster_RL4AA_2025_Do_you_really_think_about_consequences_poster.png](Poster_RL4AA_2025_Do_you_really_think_about_consequences_poster.png)
+1. **Analytic** — Direct matrix inversion of the known response matrix
+2. **Model-Based MPC** — Finite-horizon optimization with the known linear model
+3. **PPO** — Model-free RL trained to maximise cumulative reward
+4. **Random** — Baseline using uniformly sampled actions
+5. **Stepwise COBYLA** — Iterative model-free optimisation per step
+6. **Linear Bayesian MPC** — Online linear model learning with Bayesian inference
+7. **GP-MPC (Standard)** — Online non-parametric dynamics learning via GPs
+8. **GP-MPC (Causal)** — Structured GP-MPC incorporating accelerator physics causality
 
 ## Citing This Work
 
-[Placeholder for citation or DOI]
+```bibtex
+@inproceedings{hirlaender2025consequences,
+  title   = {Do You Really Think About Consequences? Bridging RL and Control Theory for Beam Steering},
+  author  = {Mironova, O. and Fischl, L. and Gallien, T. and Hirlaender, S.},
+  booktitle = {RL4AA'25 Workshop, DESY},
+  year    = {2025}
+}
+```

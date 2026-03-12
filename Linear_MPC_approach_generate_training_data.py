@@ -8,77 +8,11 @@ from typing import Any, Dict, Tuple
 import numpy as np
 
 from awake_steering_simulated import AwakeSteering
+from helper_scripts.data_management import TrajectoryDataManager, create_experiment_folder
 from environment.environment_helpers import read_experiment_config, load_env_config, \
     SmartEpisodeTrackerWithPlottingWrapper
 from helper_scripts.gp_mpc_structured_clean import init_control
 from helper_scripts.linear_Bayesian_mpc import LinearMPCController, init_visu_and_folders, logger, close_run
-# from helper_scripts.linear_data_driven_mpc import LinearMPCController, init_visu_and_folders, logger, close_run
-
-def create_experiment_folder(experiment_name: str, algorithm: str, parameter_name: str) -> Path:
-    """
-    Creates a structured experiment folder based on the experiment name, algorithm, and parameter name.
-
-    Args:
-        experiment_name (str): Name of the experiment.
-        algorithm (str): Name of the algorithm used.
-        parameter_name (str): Parameter name associated with the experiment.
-
-    Returns:
-        Path: The path to the created experiment folder.
-    """
-    current_date = datetime.now().strftime('%Y-%m-%d')
-    save_folder_results = Path("results") / experiment_name / f"Results_{current_date}" / algorithm / parameter_name
-
-    try:
-        save_folder_results.mkdir(parents=True, exist_ok=True)
-    except OSError as e:
-        print(f"Error creating directory {save_folder_results}: {e}")
-        raise
-
-    return save_folder_results, current_date
-
-
-class TrajectoryDataManager:
-
-    def __init__(self, experiment_name, test_name):
-        # Initialize storage
-        self.experiment_name = experiment_name
-        self.test_name = test_name
-
-        self.state_history = []
-        self.action_history = []
-        self.reward_history = []
-
-    def add_step_data(self, state, action ,reward):
-        self.action_history.append(action)
-        self.state_history.append(state)
-        self.reward_history.append(reward)
-
-    def clear_data(self):
-        self.state_history = []
-        self.action_history = []
-        self.reward_history = []
-
-    def get_data(self):
-
-        return np.array(self.state_history), np.array(self.action_history), np.array(self.reward_history)
-
-    def save_data(self, noise_sigma, seed):
-        # Save results
-        results_data = {
-            'state': np.array(self.state_history),
-            'action': np.array(self.action_history),
-            'reward': np.array(self.reward_history)
-        }
-        save_path, current_date_pickle = create_experiment_folder(experiment_name=self.experiment_name,
-                                                                  algorithm=self.test_name,
-                                                                  parameter_name=f'noise_sigma_{noise_sigma}')
-        save_file_name = os.path.join(save_path, f'{seed}.pkl')
-        with open(save_file_name, 'wb') as f:
-            pickle.dump(results_data, f)
-        print(f"Results saved at {save_file_name}")
-
-        # self.clear_data()
 
 # Example main function (assuming environment wrappers and configuration are available)
 def init_graphics_and_controller(env: Any, num_steps: int, params_controller_dict: Dict) -> Tuple[

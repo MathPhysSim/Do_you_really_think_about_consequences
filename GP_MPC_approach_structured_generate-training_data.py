@@ -5,7 +5,7 @@ from typing import Any, Tuple, Dict
 import matplotlib
 import numpy as np
 
-from Linear_MPC_approach_generate_training_data import TrajectoryDataManager
+from helper_scripts.data_management import TrajectoryDataManager
 from awake_steering_simulated import AwakeSteering
 
 matplotlib.use('TkAgg')  # Force the TkAgg backend for external windows

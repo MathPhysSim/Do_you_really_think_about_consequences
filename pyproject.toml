@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "do-you-really-think-about-consequences"
+version = "0.1.0"
+description = "Bridging RL and Control Theory: Beam Steering in a Linear Accelerator"
+readme = "Readme.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Simon Hirlaender"},
+]
+keywords = ["reinforcement-learning", "control-theory", "beam-steering", "MPC", "gaussian-processes"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "numpy",
+    "scipy",
+    "gymnasium",
+    "stable-baselines3",
+    "torch",
+    "pandas",
+    "matplotlib",
+    "pyyaml",
+    "scikit-learn",
+    "gpytorch",
+    "seaborn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "ruff",
+]
+
+[project.urls]
+Homepage = "https://github.com/MathPhysSim/Do_you_really_think_about_consequences"
+Poster = "https://mathphyssim.github.io/Do_you_really_think_about_consequences/"
+
+[tool.setuptools.packages.find]
+include = ["helper_scripts*", "environment*"]
